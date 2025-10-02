@@ -60,39 +60,38 @@ if (process.env.NODE_ENV !== 'test') app.use(morgan(process.env.MORGAN_FORMAT ||
 //     optionsSuccessStatus: 204
 // };
 
-// const allowedOrigins = [
-//     "https://frontend-developer-task-primetrade-ai-1.onrender.com",
-//     'http://localhost:5173', // your frontend
-// ];
+const allowedOrigins = [
+    "https://frontend-developer-task-primetrade-ai-1.onrender.com",
+];
 
-// const corsOptions = {
-//     origin: (origin, callback) => {
-//         // if (!origin || allowedOrigins.includes(origin)) {
-//         //     callback(null, origin); // allow the request
-//         // } else {
-//         //     callback(new Error("Not allowed by CORS"));
-//         // }
-//         if (!origin) return callback(null, true); // allow non-browser requests (like Postman)
-//         if (allowedOrigins.includes(origin)) {
-//             callback(null, true);
-//         } else {
-//             callback(new Error("Not allowed by CORS"));
-//         }
-//     },
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
-//     optionsSuccessStatus: 204
-// };
-
-// app.use(cors(corsOptions));
-app.use(cors({
-    origin: true, // Allow all origins temporarily
+const corsOptions = {
+    origin: (origin, callback) => {
+        // if (!origin || allowedOrigins.includes(origin)) {
+        //     callback(null, origin); // allow the request
+        // } else {
+        //     callback(new Error("Not allowed by CORS"));
+        // }
+        if (!origin) return callback(null, true); // allow non-browser requests (like Postman)
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"]
-}));
-app.options('*', cors());
+    allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
+    optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+// app.use(cors({
+//     origin: true, // Allow all origins temporarily
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"]
+// }));
+// app.options('*', cors());
 
 // app.use('/api/users', require('./routes/userRoutes'));
 // app.use('/api/tasks', require('./routes/taskRoutes'));
