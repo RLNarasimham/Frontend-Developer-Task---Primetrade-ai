@@ -47,10 +47,15 @@ api.interceptors.request.use((config: AxiosRequestConfig) => {
   const stored = safeParse(localStorage.getItem("user"));
   const token =
     stored && typeof stored === "object" && "token" in stored
-      ? (stored as any).token
+      ? String((stored as any).token)
       : null;
   config.headers = config.headers || {};
-  if (token) (config.headers as any).Authorization = `Bearer ${token}`;
+  // if (token) (config.headers as any).Authorization = `Bearer ${token}`;
+  if (config.headers && token) {
+    (
+      config.headers as Record<string, string>
+    ).Authorization = `Bearer ${token}`;
+  }
   return config;
 });
 
