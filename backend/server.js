@@ -109,17 +109,17 @@ app.get('/api/health', (req, res) => {
 });
 
 // Only serve static files if they exist (for monorepo deployments)
-if (process.env.NODE_ENV === 'production') {
-    const clientBuildPath = path.join(__dirname, '..', 'frontend', 'build');
-    const fs = require('fs');
+// if (process.env.NODE_ENV === 'production') {
+//     const clientBuildPath = path.join(__dirname, '..', 'frontend', 'build');
+//     const fs = require('fs');
 
-    if (fs.existsSync(clientBuildPath)) {
-        app.use(express.static(clientBuildPath));
-        app.get('*', (req, res) => {
-            res.sendFile(path.join(clientBuildPath, 'index.html'));
-        });
-    }
-}
+//     if (fs.existsSync(clientBuildPath)) {
+//         app.use(express.static(clientBuildPath));
+//         app.get('*', (req, res) => {
+//             res.sendFile(path.join(clientBuildPath, 'index.html'));
+//         });
+//     }
+// }
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Not Found' });
