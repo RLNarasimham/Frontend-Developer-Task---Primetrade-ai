@@ -61,7 +61,8 @@ if (process.env.NODE_ENV !== 'test') app.use(morgan(process.env.MORGAN_FORMAT ||
 // };
 
 const allowedOrigins = [
-    "https://frontend-developer-task-primetrade-ai-1.onrender.com" // your frontend
+    // "https://frontend-developer-task-primetrade-ai-1.onrender.com" // your frontend
+    "https://frontend-developer-task-primetrade-ai.onrender.com" // your frontend
 ];
 
 const corsOptions = {
