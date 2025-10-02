@@ -172,7 +172,10 @@ const generateToken = (id) => {
 // @access  Public
 const registerUser = async (req, res) => {
   try {
-    const { fullName, email, password } = req.body;
+    const { fullName, name, email, password } = req.body;
+
+    const userName = fullName || name;
+
 
     // Validate input
     if (!fullName || !email || !password) {
@@ -217,7 +220,7 @@ const registerUser = async (req, res) => {
 
     // Create user
     const user = await User.create({
-      fullName: fullName.trim(),
+      fullName: userName.trim(),
       email: email.toLowerCase(),
       password: hashedPassword,
     });

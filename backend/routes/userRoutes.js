@@ -25,6 +25,7 @@ const {
     loginUser,
     getUserProfile,
     updateUserProfile,
+    resetPassword,
     forgotPassword,
 } = require('../controllers/userController');
 const { protect } = require('../middleware/authMiddleware');

@@ -94,8 +94,25 @@ app.use(cors({
 }));
 app.options('*', cors());
 
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/tasks', require('./routes/taskRoutes'));
+// app.use('/api/users', require('./routes/userRoutes'));
+// app.use('/api/tasks', require('./routes/taskRoutes'));
+
+// Add logging and error handling for routes
+try {
+    const userRoutes = require('./routes/userRoutes');
+    app.use('/api/users', userRoutes);
+    console.log('✅ User routes loaded');
+} catch (error) {
+    console.error('❌ Failed to load user routes:', error);
+}
+
+try {
+    const taskRoutes = require('./routes/taskRoutes');
+    app.use('/api/tasks', taskRoutes);
+    console.log('✅ Task routes loaded');
+} catch (error) {
+    console.error('❌ Failed to load task routes:', error);
+}
 
 // if (process.env.NODE_ENV === 'production') {
 //     const clientBuildPath = path.join(__dirname, '..', 'frontend', 'build');
