@@ -52,10 +52,28 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 if (process.env.NODE_ENV !== 'test') app.use(morgan(process.env.MORGAN_FORMAT || 'combined'));
 
+// const corsOptions = {
+//     origin: (origin, callback) => callback(null, true),
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+//     credentials: true,
+//     optionsSuccessStatus: 204
+// };
+
+const allowedOrigins = [
+    "https://frontend-developer-task-primetrade-ai-1.onrender.com" // your frontend
+];
+
 const corsOptions = {
-    origin: (origin, callback) => callback(null, true),
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, origin); // allow the request
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
     credentials: true,
     optionsSuccessStatus: 204
 };
