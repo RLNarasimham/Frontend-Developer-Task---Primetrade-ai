@@ -64,20 +64,30 @@ const allowedOrigins = [
     "https://frontend-developer-task-primetrade-ai-1.onrender.com",
 ];
 
+// const corsOptions = {
+//     origin: (origin, callback) => {
+//         // if (!origin || allowedOrigins.includes(origin)) {
+//         //     callback(null, origin); // allow the request
+//         // } else {
+//         //     callback(new Error("Not allowed by CORS"));
+//         // }
+//         if (!origin) return callback(null, true); // allow non-browser requests (like Postman)
+//         if (allowedOrigins.includes(origin)) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error("Not allowed by CORS"));
+//         }
+//     },
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
+//     optionsSuccessStatus: 204
+// };
+
+// app.use(cors(corsOptions));
+
 const corsOptions = {
-    origin: (origin, callback) => {
-        // if (!origin || allowedOrigins.includes(origin)) {
-        //     callback(null, origin); // allow the request
-        // } else {
-        //     callback(new Error("Not allowed by CORS"));
-        // }
-        if (!origin) return callback(null, true); // allow non-browser requests (like Postman)
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
+    origin: "https://frontend-developer-task-primetrade-ai-1.onrender.com",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
@@ -85,6 +95,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Handle preflight requests
+
 // app.use(cors({
 //     origin: true, // Allow all origins temporarily
 //     credentials: true,
