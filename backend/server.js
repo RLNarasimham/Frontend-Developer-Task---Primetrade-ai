@@ -67,15 +67,21 @@ const allowedOrigins = [
 
 const corsOptions = {
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, origin); // allow the request
+        // if (!origin || allowedOrigins.includes(origin)) {
+        //     callback(null, origin); // allow the request
+        // } else {
+        //     callback(new Error("Not allowed by CORS"));
+        // }
+        if (!origin) return callback(null, true); // allow non-browser requests (like Postman)
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));
         }
     },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
-    credentials: true,
     optionsSuccessStatus: 204
 };
 
