@@ -68,7 +68,6 @@ export const Login = () => {
                 id="email"
                 type="email"
                 value={email}
-                autoComplete="email-id-login"
                 onChange={(e) => setEmail(e.target.value)}
                 className={`w-full px-4 py-3 rounded-lg border ${
                   errors.email
