@@ -1,25 +1,3 @@
-// const express = require('express');
-// const dotenv = require('dotenv');
-// const cors = require('cors');
-// const connectDB = require('./config/db');
-
-// dotenv.config();
-
-// connectDB();
-
-// const app = express();
-
-// app.use(express.json());
-// app.use(cors());
-
-// app.use('/api/users', require('./routes/userRoutes'));
-// app.use('/api/tasks', require('./routes/taskRoutes'));
-
-// const PORT = process.env.PORT || 5000;
-
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -60,42 +38,36 @@ if (process.env.NODE_ENV !== 'test') app.use(morgan(process.env.MORGAN_FORMAT ||
 //     optionsSuccessStatus: 204
 // };
 
+// server.js
+
 const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
     "https://frontend-developer-task-primetrade-ai-1.onrender.com",
 ];
 
-// const corsOptions = {
-//     origin: (origin, callback) => {
-//         // if (!origin || allowedOrigins.includes(origin)) {
-//         //     callback(null, origin); // allow the request
-//         // } else {
-//         //     callback(new Error("Not allowed by CORS"));
-//         // }
-//         if (!origin) return callback(null, true); // allow non-browser requests (like Postman)
-//         if (allowedOrigins.includes(origin)) {
-//             callback(null, true);
-//         } else {
-//             callback(new Error("Not allowed by CORS"));
-//         }
-//     },
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
-//     optionsSuccessStatus: 204
-// };
-
-// app.use(cors(corsOptions));
-
 const corsOptions = {
-    origin: "https://frontend-developer-task-primetrade-ai-1.onrender.com",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
-    optionsSuccessStatus: 204
+    origin: (origin, callback) => {
+        // Check if the request's origin is in our list of allowed origins.
+        // The '!origin' part allows requests from tools like Postman where origin is undefined.
+        if (!origin || allowedOrigins.includes(origin)) {
+            // If it is, allow the request by passing 'true' to the callback.
+            // The 'cors' package will then set the Access-Control-Allow-Origin header
+            // to the specific origin of the request.
+            callback(null, true);
+        } else {
+            // If the origin is not allowed, reject the request.
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true, // This is crucial for allowing credentials.
+    optionsSuccessStatus: 204,
 };
 
+
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight requests
+
+
 
 // app.use(cors({
 //     origin: true, // Allow all origins temporarily
