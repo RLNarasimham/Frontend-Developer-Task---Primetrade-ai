@@ -99,7 +99,7 @@ export const Login = () => {
                     : "border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                 } focus:outline-none focus:ring-2 transition-colors`}
                 placeholder="Enter your password"
-                autoComplete="current-password"
+                // autoComplete="current-password"
               />
               {errors.password && (
                 <p className="mt-2 text-sm text-red-600">{errors.password}</p>
