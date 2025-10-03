@@ -100,6 +100,7 @@ export const Signup = () => {
                     : "border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                 } focus:outline-none focus:ring-2 transition-colors`}
                 placeholder="you@example.com"
+                autoComplete="email-id-signup"
               />
               {errors.email && (
                 <p className="mt-2 text-sm text-red-600">{errors.email}</p>
