@@ -65,16 +65,15 @@ export const Dashboard = () => {
   const fetchTasks = async () => {
     setLoading(true);
     try {
-      // 1. Update the expected type to reflect the nested structure
-      const { data } = await api.get<{ data: Task[] }>("/tasks");
+      // Update the expected type to look for a 'tasks' property
+      const { data } = await api.get<{ tasks: Task[] }>("/tasks");
 
-      // 2. Access the nested 'data' property before setting the state
-      // Also, add a check to ensure it's an array to prevent future errors
-      if (Array.isArray(data.data)) {
-        setTasks(data.data);
+      // Check for the 'tasks' property and make sure it's an array
+      if (data && Array.isArray(data.tasks)) {
+        setTasks(data.tasks); // Use the nested array from the 'tasks' property
       } else {
-        console.error("API response for tasks was not an array:", data);
-        setTasks([]); // Fallback to an empty array if data is not as expected
+        console.error("API did not return the expected 'tasks' array:", data);
+        setTasks([]); // Fallback to an empty array
       }
     } catch (error) {
       console.error("Error fetching tasks:", error);

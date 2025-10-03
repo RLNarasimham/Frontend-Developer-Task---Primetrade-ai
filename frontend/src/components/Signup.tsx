@@ -117,7 +117,7 @@ export const Signup = () => {
                 id="password"
                 type="password"
                 value={password}
-                // autoComplete="new-password"
+                autoComplete="new-password"
                 onChange={(e) => setPassword(e.target.value)}
                 className={`w-full px-4 py-3 rounded-lg border ${
                   errors.password

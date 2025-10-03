@@ -97,18 +97,6 @@ try {
     console.error('❌ Failed to load task routes:', error);
 }
 
-// if (process.env.NODE_ENV === 'production') {
-//     const clientBuildPath = path.join(__dirname, '..', 'frontend', 'build');
-//     app.use(express.static(clientBuildPath));
-//     app.get('*', (req, res) => {
-//         res.sendFile(path.join(clientBuildPath, 'index.html'));
-//     });
-// } else {
-//     app.get('/', (req, res) => {
-//         res.json({ status: 'ok', environment: process.env.NODE_ENV || 'development' });
-//     });
-// }
-
 // Health check endpoint - MUST come before static files
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', environment: process.env.NODE_ENV || 'development' });
